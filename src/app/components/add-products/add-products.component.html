@@ -1,0 +1,68 @@
+<div class="row">
+	<form class="col s12" (ngSubmit)="onSubmit()">
+		<div class="row">
+		    <div class="input-field col s6">
+		        <input  id="id" type="text" class="validate" name="id" [(ngModel)] = "product.id">
+		        <label for="id">Id</label>
+		    </div>
+		    <div class="input-field col s6">
+		        <input id="name" type="text" class="validate" [(ngModel)]="product.name" name="name">
+		        <label for="name">Name</label>
+		    </div>
+	    </div>
+	   <div class="row">
+		    <div class="input-field col s6">
+		        <input  id="description" type="text" class="validate" name="description" [(ngModel)] = "product.description">
+		        <label for="description">Description</label>
+		    </div>
+		    <div class="input-field col s6">
+		        <input id="price" type="text" class="validate" [(ngModel)]="product.eachPrice" name="price">
+		        <label for="price">Price</label>
+		    </div>
+	    </div>
+	  <div class="row">
+		    <div class="input-field col s6">
+		        <input  id="category_id" type="text" class="validate" name="category_id" [(ngModel)] = "product.category.id">
+		        <label for="category_id">Category id</label>
+		    </div>
+		    <div class="input-field col s6">
+		        <input id="Category_name" type="text" class="validate" [(ngModel)]="product.category.name" name="Category_name">
+		        <label for="Category_name">Category name</label>
+		    </div>
+	    </div>
+	  <div class="row">
+		    <div class="input-field col s6">
+		        <input  id="caracteristicas" type="text" class="validate" name="caracteristicas" [(ngModel)] = "product.medical_characteristics">
+		        <label for="caracteristicas">Characteristics</label>
+		    </div>
+		    <div class="input-field col s6">
+		        <input  id="photo" type="text" class="validate" name="photo" [(ngModel)] = "product.photos">
+		        <label for="caracteristicas">Photos</label>
+		    </div>
+		    
+
+		    <!-- upload image-->
+		    <div class="input-field col s6">
+		        <input id="file" type="file" (change)="handleFileInput($event.target.files)">
+		        <button type="button" (click)="uploadFileToActivity()">cargar</button>
+		    </div>
+	    
+
+
+	    </div>
+		
+		<div class="row">
+		    <div class="input-field col s6">
+		        <input  id="volume" type="text" class="validate" name="volume" [(ngModel)] = "product.volume">
+		        <label for="volume">Volume</label>
+		    </div>
+		    <div class="input-field col s6">
+		        <input id="plataforma" type="text" class="validate" [(ngModel)]="product.platform" name="plataforma">
+		        <label for="plataforma">Platform</label>
+		    </div>
+	    </div>
+
+	 
+		 <input class="btn waves-effect waves-light" type="submit" value="Guardar" >
+ </form>
+ </div> 

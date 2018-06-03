@@ -1,0 +1,32 @@
+form, .view{
+	border: solid gray 2px !important ;
+    width: 189px;
+    padding: 5px !important;
+    display: block !important;
+    position: fixed !important;
+    left: 39% !important;
+    background-color: white;
+    z-index: 11;
+}
+.delete{
+	color:red;
+}
+
+.update{
+	color:blue;
+}
+
+.cancel{
+	color: gray;
+}
+
+
+  /*
+  When creating your CSS selector,
+  change "brown" to something of your choosing
+  */
+  .waves-effect.waves-brown .waves-ripple {
+   /* The alpha value allows the text and background color
+   of the button to still show through. */
+    background-color: rgba(121, 85, 72, 0.65);
+  }

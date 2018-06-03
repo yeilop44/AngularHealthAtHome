@@ -1,0 +1,62 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<!--/bootstrap 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+-->
+
+
+<nav class="nav-wrapper">
+  <div class="nav-wrapper">
+    <div class="brand-logo">HEALTH AT HOME</div>
+    <ul class="right hide-on-med-and-down">
+      <li><a *ngIf="auth.loggedIn" (click)="auth.loggedIn = false" class="waves-effect waves-light btn">Salir</a></li>
+    </ul>
+    <h6 class="center-align" *ngIf="auth.loggedIn" style="color:white">{{usuario.user}}</h6>
+  </div> 
+  
+  
+</nav>
+
+<br>
+<br>
+
+<div *ngIf="!auth.loggedIn" class="row">
+  <form (ngSubmit)="login()" class="col s12"> 
+
+      <div class="input-field col s6">
+        <i class="material-icons prefix">mail_outline</i>
+        <input type="text" [(ngModel)]= "usuario.user"  class="form-control" name="email" placeholder="Email">
+      </div>
+
+      <div class="input-field col s6">
+        <i class="material-icons prefix">lock_outline</i>
+        <input type="passWord" [(ngModel)]= "usuario.password" class="form-control"  name="pass" placeholder="Contraseña">
+      </div>
+    
+    
+    <input type="submit" name="" value="ingresar" class="btn waves-effect bg-primary col s12">
+ 
+  </form>
+</div>
+
+
+<section *ngIf="auth.loggedIn">
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="nav-wrapper">
+     
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="product">Products</a></li>
+        <li><a routerLink="product/new">New Product</a></li>
+        <li><a routerLink="orders">Orders</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <router-outlet></router-outlet> 
+</section>
