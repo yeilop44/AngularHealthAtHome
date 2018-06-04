@@ -26,7 +26,7 @@ export class ProductService {
   getProduct(){
       let token =this.auth.getToken();  
   		let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json'});
-      console.log(token);
+      
       //let url:string=this.urlApi;
       //configurar url (busqueda)
       //if(key && key != '') {

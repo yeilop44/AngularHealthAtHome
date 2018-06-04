@@ -1,2 +1,26 @@
+<div class="row">
 
-<div #gmap style="width:100%;height:400px"></div>
+	<div class="col s2">
+        <!-- Grey navigation panel -->
+        <div class="collection" *ngFor=" let product of products">
+          <a class="collection-item" (click)="showProduct(product);">{{product.name}}</a> 
+        </div>
+   	</div>
+
+   	<div class="col s9" >
+		<div #gmap style="width:100%;height:400px"></div>
+	</div>
+
+	<div class="col s9" *ngIf="show">
+        <!-- Teal page content  -->
+        <h6>Detalles de la Orden</h6>
+		    <p><strong>Name: </strong>{{product.name}}</p>
+        <p><strong>ID: </strong>{{product.id}} </p>
+        <p><strong>Categoria: </strong>{{product.category.name}} </p>
+        <p><strong>Dir: </strong>{{final.lat}}-{{final.lng}}</p>
+      </div>
+</div>	
+
+
+
+ 	
