@@ -52,7 +52,7 @@
         <li><a routerLink="/">Home</a></li>
         <li><a routerLink="product">Products</a></li>
         <li><a routerLink="product/new">New Product</a></li>
-        <li><a routerLink="orders">Orders</a></li>
+        <li><a routerLink="orders">Order History</a></li>
       </ul>
     </div>
   </nav>
@@ -60,3 +60,23 @@
 
   <router-outlet></router-outlet> 
 </section>
+<footer *ngIf="auth.loggedIn" class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">HEALTH AT HOME S.A.</h5>
+                <p class="grey-text text-lighten-4">Health At Home se dedica a atender pacientes de forma remota y personalizada, tratando de hacer del servicio de salud mucho mejor para sus clientes.<br> 
+                Health At Home en este momento tiene presencia en 3 paises de suramerica y 2 europeos. En los paises de suramerica tiene servicio en la 3 principales ciudades de cada país y en los europeos en las 5 ciudades principales.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            HEALTH AT HOME S.A.<br>
+            Medellín, Antioquia, Colombia.<br>
+            Se recomienda utilizar Chrome o Mozilla Firefox en una resolución de 1024 x 768 o superior.
+           © 2018 Copyright Text
+            
+            </div>
+          </div>
+        </footer>
