@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service';
 import { Product } from '../models/modelEjemplo';
+import { Item } from '../models/modelEjemplo';
 
 
 @Component({
@@ -32,29 +33,42 @@ export class OrdersComponent implements OnInit {
 	final;
 	x ;
 
+  user='';
+
 
 	ListDirs: any[];
-	products:any[];
-	urlApi:string="http://13.90.130.197/product";
+	orders:any[];
+  items_res:any[];
+	urlApi:string="http://13.90.130.197/order/user";
  	show:boolean = false;
 
- 	product: Product = {
-     name: '',
-     description:'',
-     category:{ id:'',name:''},
-     eachPrice:0,
-     id:'',
-     medical_characteristics:'',
-     photos:[''],
-     platform:'',
-     volume:'',
-  };
+ 	item: Item = {
+     
+     productOrd: [ {id:'',
+                category:{id:'', name:''},
+                name:'',
+                eachPrice:0,
+                description:'',
+                
+                medical_characteristics:'',
+                photos:[''],
+                volume:'',
+                platform:'',
+                
+                quantity:0}],
+
+     trackingInfo: {destination: { latitude: 0, longitude: 0},
+                    origin: { latitude: 0, longitude: 0},
+                    path: [{latitude: 0,longitude: 0}]
+      }
+    
+   };
 
   constructor(private http:Http, private auth:AuthService, private httpC:HttpClient) { }
 
   	ngOnInit() {
  		
- 		this.getProduct();
+ 		//this.getIdOrderByUser();
 
  			//mapa inicial
 		  	var mapProp = {
@@ -65,22 +79,68 @@ export class OrdersComponent implements OnInit {
 		    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 	}
 
+
 	//función obtiene Ordenes
-	getProduct(){
-                     
+	getIdOrderByUser(user){
+        
+      //comprueba el campo usuario y adiciana el user a la url
+        let url = '';             
+       if(user && user != '') {
+          url=`${this.urlApi}/${user}`
+          let token = this.auth.getToken(); 
+          let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
+
+          return this.http.get(url,{headers:headers})
+         .map(res=>{
+               this.orders = res.json();
+               console.log(this.orders);
+               
+                this.getOrderById(this.orders);
+             }).subscribe(res=>{
+              
+           }); 
+
+       }else{
+         alert("ingrese un usuario con ordenes");
+       }
+        
+      
+    }
+
+//función obtner detalles de la orden
+    getOrderById(order){
+        
+      let urlorder = "http://13.90.130.197/order"; 
+      let url=`${urlorder}/${order}`          
       let token = this.auth.getToken(); 
+     // const httpOptions = {
+     // headers: new HttpHeaders({'Authorization': `Bearer ${token.token}`, 'Content-Type':'application/json','Accept': 'application/json'})
+    //};
       let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
 
-      return this.http.get(this.urlApi,{headers:headers})
+
+       return this.http.get(url,{headers:headers})
          .map(res=>{
+           this.items_res = res.json();
+           console.log(this.items_res);
+              // res.json()
+          }).subscribe(res=>{
+          
+              
+
                
-                this.products = res.json();
-             }).subscribe(res=>{
+            
            }); 
     }
 
+
+
+
+
     //función mostrar Detalles Ordenes
-    showProduct(product:Product){
+    showProduct(order){
+        
+        this.getOrderById(order)
         this.x = 0;
         //Json de lat lng y date
         this.ListDirs = [
@@ -226,21 +286,15 @@ export class OrdersComponent implements OnInit {
         });
 
 
-        this.apper();
+       this.apper();
 
           //for (var i = 0, length = this.ListDirs.length; i < length; i++) {}
-       
-        this.product= {
-       name: product.name,
-       description:product.description,
-       category:{ id:product.category.id,name:product.category.name},
-       eachPrice:product.eachPrice,
-       id:product.id,
-       medical_characteristics:'',
-       photos:product.photos,
-       platform:product.platform,
-       volume:product.volume,
-        };
+
+
+         
+
+
+      
   }
 
     //función itera el json de lat long y date - saca la diferencia de date
@@ -248,8 +302,8 @@ export class OrdersComponent implements OnInit {
          
          var interval;
          
-         var now = moment(this.ListDirs[this.x+1].date); //segundo objeto date
-         var end = moment(this.ListDirs[this.x].date); // primer objeto date
+         var now = moment(this.ListDirs[this.x+2].date); //segundo objeto date
+         var end = moment(this.ListDirs[this.x+1].date); // primer objeto date
          var duration = moment.duration(now.diff(end));
          var seconds = duration.asSeconds();
          var secuencia = seconds*1000;
@@ -274,6 +328,7 @@ export class OrdersComponent implements OnInit {
                  latLng = new google.maps.LatLng(data.lat, data.lng); 
                 // Crear un Marker y lo ponerlo en el mapa
                 let marker = new google.maps.Marker({
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                   position: latLng,
                   map: this.map,
                   title: ''
