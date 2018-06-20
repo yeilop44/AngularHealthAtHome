@@ -10,6 +10,8 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   
+  incorrect:any;
+
   usuario:Usuario={
     password:"",
     user:""
@@ -20,10 +22,14 @@ export class AppComponent {
 
   login(){
 
-    this.auth.log(this.usuario)
-             .subscribe(data=>{
-                 
-              }); 
-  }
+    this.auth.log(this.usuario)    
 
+        .subscribe(data=>{
+         
+              }); 
+       
+       
+              
+
+  }
 }

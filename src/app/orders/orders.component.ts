@@ -39,6 +39,7 @@ export class OrdersComponent implements OnInit {
 
 	ListDirs: any[];
 	orders:any[];
+  ordersvacio;
   items_res:any[];
 	urlApi:string="http://13.90.130.197/order/user";
  	show:boolean = false;
@@ -82,10 +83,11 @@ export class OrdersComponent implements OnInit {
 	}
 
 
-	//función obtiene Ordenes
+	//función obtiene Ordenes por usuario
 	getIdOrderByUser(user){
-          this.userquema = this.user;
-          this.showOrders = true;
+       //this.showOrders = true;
+       //this.userquema = this.user;
+       
       //comprueba el campo usuario y adiciana el user a la url
         let url = '';             
        if(user && user != '') {
@@ -94,55 +96,56 @@ export class OrdersComponent implements OnInit {
           let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
 
           return this.http.get(url,{headers:headers})
-         .map(res=>{
+           .map(res=>{
                this.orders = res.json();
                console.log(this.orders);
-               
+                 console.log(this.orders.length);
+                 if(this.orders.length==(null || 0)){
+                   alert("The user "+ this.user + " doesn't have orders");
+                   this.showOrders = false;
+
+                 }else{
+                   this.showOrders = true;
+                   this.userquema = this.user
+                 }
+
                 //this.getOrderById(this.orders);
-
              }).subscribe(res=>{
-              
-           }); 
-            
+          }); 
+             
+        
 
-       }else{
-         alert("ingrese un usuario con ordenes");
-          this.showOrders = false;
-
-       }
-         
-      
+        }else{
+          alert("ingrese un usuario");
+              this.showOrders = false;
+                var mapProp = {
+                center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
+                zoom: 9,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        }
     }
 
-//función obtner detalles de la orden
+    //función obtner detalles de la orden
     getOrderById(order){
         
-      let urlorder = "http://13.90.130.197/order"; 
-      let url=`${urlorder}/${order}`          
-      let token = this.auth.getToken(); 
-     // const httpOptions = {
-     // headers: new HttpHeaders({'Authorization': `Bearer ${token.token}`, 'Content-Type':'application/json','Accept': 'application/json'})
-    //};
-      let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
+        let urlorder = "http://13.90.130.197/order"; 
+        let url=`${urlorder}/${order}`          
+        let token = this.auth.getToken(); 
+       // const httpOptions = {
+       // headers: new HttpHeaders({'Authorization': `Bearer ${token.token}`, 'Content-Type':'application/json','Accept': 'application/json'})
+      //};
+        let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
 
-
-       return this.http.get(url,{headers:headers})
-         .map(res=>{
-           this.items_res = res.json();
-           console.log(this.items_res);
-              // res.json()
-          }).subscribe(res=>{
-          
-              
-
-               
-            
-           }); 
+          return this.http.get(url,{headers:headers})
+           .map(res=>{
+             this.items_res = res.json();
+             console.log(this.items_res);
+                // res.json()
+            }).subscribe(res=>{
+        }); 
     }
-
-
-
-
 
     //función mostrar Detalles Ordenes
     showProduct(order){
@@ -302,6 +305,7 @@ export class OrdersComponent implements OnInit {
          
          var interval;
          
+         //saca la diferncia de las fechas entre dos objetos del array 
          var now = moment(this.ListDirs[this.x+1].date); //segundo objeto date
          var end = moment(this.ListDirs[this.x].date); // primer objeto date
          var duration = moment.duration(now.diff(end));
@@ -316,10 +320,8 @@ export class OrdersComponent implements OnInit {
               clearInterval(interval);
               if(this.x<this.ListDirs.length-1){
                 this.apper();
-             
               }else{
                  this.x = -1;
-                
               }
               
             }, secuencia);   
@@ -334,9 +336,7 @@ export class OrdersComponent implements OnInit {
                   title: ''
                   
                 });
-
                 console.log(this.x.toString());
-
        this.x ++;
     }
 
