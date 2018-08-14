@@ -38,9 +38,9 @@
 		<div class="view" *ngIf="show" style="width:45% !important; margin-top: -12%;">
 			<h3>{{product.name}}</h3>
 			<p><strong>ID: </strong>{{product.id}} </p>
-			<p> <strong>Descripcion: </strong> {{product.description}} </p>
-			<p><strong>Precio: </strong>{{product.eachPraice}} </p>
-			<p><strong>Categoria: </strong>{{product.category.name}} </p>
+			<p> <strong>Description: </strong> {{product.description}} </p>
+			<p><strong>Price: </strong>{{product.eachPraice}} </p>
+			<p><strong>Category: </strong>{{product.category.name}} </p>
 			<p *ngIf="product.regist.time"><strong>Update: </strong>{{product.regist.time}}</p>
 			<p *ngIf="product.regist.time"><strong>User: </strong>{{product.regist.user}}</p>
 			<button (click)="show=false">cerrar</button >
@@ -58,15 +58,15 @@
 					
 					<div class="card-content">
 						<h5 class="card-title"><strong> {{product.name}} </strong></h5>
-						<p class="card-text"> Categoria: {{product.category.name}}</p>
-						<p class="card-text">Precio: {{product.eachPrice}}</p>
-						<p class="card-text">Descripcion: {{product.description}}</p>
+						<p class="card-text"> Category: {{product.category.name}}</p>
+						<p class="card-text">Price: {{product.eachPrice}}</p>
+						<p class="card-text">Description: {{product.description}}</p>
 						<p class="card-text">Id:{{product.id}}</p>
 						<p class="card-text">photo:{{product.photos}}</p>
 					</div>
-						<button  (click)="deleteProduct(product)"  class="btn waves-effect waves-red">eliminar</button>  
-						<button  (click)="toUpd(product)" class="update" class="btn waves-effect waves-orange">actualizar</button>  
-						<button (click)="showProduct(product)" class="btn btn-info" class="btn waves-effect waves-light">ver</button ><br><br>
+						<button  (click)="deleteProduct(product)"  class="btn waves-effect waves-red">Delete</button>  
+						<button  (click)="toUpd(product)" class="update" class="btn waves-effect waves-orange">Update</button>  
+						<button (click)="showProduct(product)" class="btn btn-info" class="btn waves-effect waves-light">See changes</button ><br><br>
 				</div>
 			</div>
 		</div>

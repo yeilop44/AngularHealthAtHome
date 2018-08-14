@@ -44,8 +44,10 @@ export class OrdersComponent implements OnInit {
  	
   showOrders:boolean = false;
   showDetailsOrder:boolean = false;
+  showMap:boolean = true;
 
   interval;
+  numOrders;
 
  	item: Item = {
      
@@ -73,27 +75,25 @@ export class OrdersComponent implements OnInit {
 
   	ngOnInit() {
      this.x=0;
-     clearInterval(this.interval);
- 		//this.getIdOrderByUser();
+     clearInterval(this.interval); //Para el SetIntervalcd
+ 		
 
  			//Crea Mapa inicial
-		  	var mapProp = {
+		  	/*var mapProp = {
 		      center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
 		      zoom: 9,
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
 		    };
-		    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-	}
+		    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
+	  }
 
 
-	//función obtiene Ordenes por usuario
+	//Obtiene Ordenes por usuario
 	getIdOrderByUser(user){
-     clearInterval(this.interval);
 
-       //this.showOrders = true;
-       //this.userquema = this.user;
-       
-      //comprueba el campo usuario y adiciana el user a la url
+     clearInterval(this.interval); //Para el SetInterval
+
+      //comprueba si el campo usuario no está vacio y adiciona el user a la url
         let url = '';             
        if(user && user != '') {
           url=`${this.urlApi}/${user}`
@@ -103,50 +103,53 @@ export class OrdersComponent implements OnInit {
           return this.http.get(url,{headers:headers})
            .map(res=>{
                this.orders = res.json();
-               console.log(this.orders);
+                 console.log(this.orders);
                  console.log(this.orders.length);
+                 this.numOrders = this.orders.length;
 
-                 if(this.orders.length==(null || 0)){
+                  //Comprueba si el usuario tiene orders
+                  if(this.orders.length==(null || 0)){
                    alert("The user "+ this.user + " doesn't have orders");
                    this.showOrders = false;
                    this.showDetailsOrder = false;
                    this.x=0;
+                   this.showMap = false;
 
-                      var mapProp = {
-                      center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
-                      zoom: 9,
-                      mapTypeId: google.maps.MapTypeId.ROADMAP
-                      };
-                      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-
-                 }else{
+                                 /* var mapProp = {
+                                  center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
+                                  zoom: 9,
+                                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                                  };
+                                  this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
+                  }else{
                    this.showOrders = true;
                    this.userquema = this.user
-                 }
-
-                //this.getOrderById(this.orders);
+                   this.user= "";
+                   this.showMap = true;
+                  }
              }).subscribe(res=>{
-          }); 
-             
-        
+          });   
 
         }else{
           alert("ingrese un usuario");
               this.showOrders = false;
+              this.showDetailsOrder = false;
+              this.showMap = false;
               this.x=0;
-             
+               /*
                 var mapProp = {
                 center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
                 zoom: 9,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+                this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
         }
     }
 
     //función obtner detalles de la orden
     getOrderById(order){
-      clearInterval(this.interval);
+     
+      clearInterval(this.interval); //Para el SetInterval
 
         this.showDetailsOrder = true; 
         let urlorder = "http://13.90.130.197/order"; 
@@ -169,9 +172,10 @@ export class OrdersComponent implements OnInit {
 
     //función mostrar Detalles Ordenes
     showProduct(order){
-      clearInterval(this.interval);
+  
+        clearInterval(this.interval); //Para el SetInterval
         this.getOrderById(order)
-        this.x = 0;
+        this.x = 0; 
         //Json de lat lng y date del Recorrido
        this.ListDirs = [
          
@@ -318,13 +322,13 @@ export class OrdersComponent implements OnInit {
                 }
               });
      
-      console.log(this.ListDirs.length);
 
-       //alert("Por favor señor usuario espere a que termine el recorrido");
+
+      
   		//llama la función que itera el Json y pinta los puntos del recorrido
   		this.appear();
     
-		  //for (var i = 0, length = this.ListDirs.length; i < length; i++) {}
+		  
   	}
 
     //función itera el Json de lat, long y date, de acuerdo con la diferencia de los tiempos entre cada objeto (.date) del Json
