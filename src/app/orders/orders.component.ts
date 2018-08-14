@@ -33,6 +33,7 @@ export class OrdersComponent implements OnInit {
 	final;
 	x ;
 
+
   user='';
   userquema;
 
@@ -42,8 +43,15 @@ export class OrdersComponent implements OnInit {
   ordersvacio;
   items_res:any[];
 	urlApi:string="http://13.90.130.197/order/user";
- 	show:boolean = false;
+ 	
   showOrders:boolean = false;
+  showDetailsOrder:boolean = false;
+
+
+  interval;
+
+
+
 
  	item: Item = {
      
@@ -70,10 +78,11 @@ export class OrdersComponent implements OnInit {
   constructor(private http:Http, private auth:AuthService, private httpC:HttpClient) { }
 
   	ngOnInit() {
- 		
+     this.x=0;
+     clearInterval(this.interval);
  		//this.getIdOrderByUser();
 
- 			//mapa inicial
+ 			//Crea Mapa inicial
 		  	var mapProp = {
 		      center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
 		      zoom: 9,
@@ -85,6 +94,8 @@ export class OrdersComponent implements OnInit {
 
 	//función obtiene Ordenes por usuario
 	getIdOrderByUser(user){
+     clearInterval(this.interval);
+
        //this.showOrders = true;
        //this.userquema = this.user;
        
@@ -100,9 +111,19 @@ export class OrdersComponent implements OnInit {
                this.orders = res.json();
                console.log(this.orders);
                  console.log(this.orders.length);
+
                  if(this.orders.length==(null || 0)){
                    alert("The user "+ this.user + " doesn't have orders");
                    this.showOrders = false;
+                   this.showDetailsOrder = false;
+                   this.x=0;
+
+                      var mapProp = {
+                      center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
+                      zoom: 9,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                      };
+                      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
                  }else{
                    this.showOrders = true;
@@ -118,6 +139,8 @@ export class OrdersComponent implements OnInit {
         }else{
           alert("ingrese un usuario");
               this.showOrders = false;
+              this.x=0;
+             
                 var mapProp = {
                 center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
                 zoom: 9,
@@ -129,7 +152,9 @@ export class OrdersComponent implements OnInit {
 
     //función obtner detalles de la orden
     getOrderById(order){
-        
+      clearInterval(this.interval);
+
+        this.showDetailsOrder = true; 
         let urlorder = "http://13.90.130.197/order"; 
         let url=`${urlorder}/${order}`          
         let token = this.auth.getToken(); 
@@ -144,16 +169,17 @@ export class OrdersComponent implements OnInit {
              console.log(this.items_res);
                 // res.json()
             }).subscribe(res=>{
-        }); 
+          }); 
+           
     }
 
     //función mostrar Detalles Ordenes
     showProduct(order){
-        
+      clearInterval(this.interval);
         this.getOrderById(order)
-        this.x = 1;
-        //Json de lat lng y date
-        this.ListDirs = [
+        this.x = 0;
+        //Json de lat lng y date del Recorrido
+       this.ListDirs = [
          
           { lat:6.250270954618633, lng: -75.56842998998036, date: "2015-06-17 14:10:00" },
           { lat:6.250429907901519, lng: -75.56837951561647, date: "2015-06-17 14:10:01"},
@@ -168,7 +194,7 @@ export class OrdersComponent implements OnInit {
           { lat:6.250987558524169, lng: -75.56934901245768, date: "2015-06-17 14:10:18"},
           { lat:6.251053192444991, lng: -75.56947288167976, date: "2015-06-17 14:10:19"},
           { lat:6.251081498699873, lng:-75.56955651776661,  date: "2015-06-17 14:10:20"},
-          { lat:6.251174196819546, lng: -75.56973793276484, date: "2015-06-17 14:10:23"},
+           { lat:6.251174196819546, lng: -75.56973793276484, date: "2015-06-17 14:10:23"},
           { lat:6.251233165065529, lng:-75.56985643756889,  date: "2015-06-17 14:10:26" },
           { lat:6.251267943460775, lng: -75.56994681293838, date: "2015-06-17 14:10:28" },
           { lat:6.251306442861838, lng: -75.57002663669459, date: "2015-06-17 14:10:32" },
@@ -258,88 +284,102 @@ export class OrdersComponent implements OnInit {
           { lat:6.235147540511137, lng: -75.57925415836166, date: "2015-06-17 14:13:28" },
           { lat:6.235136875141132, lng:-75.5798201044638 ,  date: "2015-06-17 14:13:30" },
           { lat:6.235654145336983, lng: -75.58000785909485, date: "2015-06-17 14:13:31" },
-           ]
+        ]
 
-       let ListDirFirstLat = this.ListDirs[0].lat;
-       let ListDirFirstLng = this.ListDirs[0].lng;
-       let ListDirLastestLat = this.ListDirs[this.ListDirs.length -1].lat;
-       let ListDirLastestLng = this.ListDirs[this.ListDirs.length -1].lng;
-       
-       
-
-      this.origen = {lat:ListDirFirstLat, lng:ListDirFirstLng};
-      this.final = {lat:ListDirLastestLat, lng:ListDirLastestLng};
-      this.show = true;
-      var directionsDisplay = new google.maps.DirectionsRenderer;
-      var directionsService = new google.maps.DirectionsService;
-
-      var mapProp = {
-        center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
-        zoom:8,
-      };
-      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-      
-      directionsDisplay.setMap(this.map);
-     
-       this.drawRoute = {
-         origin: this.origen,
-         destination: this.final,
-         travelMode: 'DRIVING',
-         unitSystem: google.maps.UnitSystem.METRIC
-        }
-      
-        directionsService.route(this.drawRoute, function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            // Muestra la Ruta en el Mapa
-            directionsDisplay.setDirections(response);
-          }
-        });
-
-       this.apper();
-
-          //for (var i = 0, length = this.ListDirs.length; i < length; i++) {}
-  }
-
-    //función itera el json de lat long y date - saca la diferencia de date
-    apper(){
-         
-         var interval;
-         
-         //saca la diferncia de las fechas entre dos objetos del array 
-         var now = moment(this.ListDirs[this.x+1].date); //segundo objeto date
-         var end = moment(this.ListDirs[this.x].date); // primer objeto date
-         var duration = moment.duration(now.diff(end));
-         var seconds = duration.asSeconds();
-         var secuencia = seconds*1000;
-        // console.log(seconds.toString()); 
-        //console.log(secuencia);     
-        //this.duration_ += 1000;
-
-            interval = setInterval(()=> { 
+           //Almacena la primera y ultima ubicación 
+              let ListDirFirstLat = this.ListDirs[0].lat;
+              let ListDirFirstLng = this.ListDirs[0].lng;
+              let ListDirLastestLat = this.ListDirs[this.ListDirs.length -1].lat;
+              let ListDirLastestLng = this.ListDirs[this.ListDirs.length -1].lng;
+               
+            //almacena el origen y final del recorrido
+              this.origen = {lat:ListDirFirstLat, lng:ListDirFirstLng};
+              this.final = {lat:ListDirLastestLat, lng:ListDirLastestLng};
               
-              clearInterval(interval);
-              if(this.x<this.ListDirs.length-1){
-                this.apper();
-              }else{
-                 this.x = -1;
+
+
+            //Crea Map inicial
+              var mapProp = {
+              center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
+              zoom:8,
+              };
+              this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+
+            //Dibuja la Ruta en el Map
+              var directionsDisplay = new google.maps.DirectionsRenderer;
+              var directionsService = new google.maps.DirectionsService;
+
+              directionsDisplay.setMap(this.map);
+              this.drawRoute = {
+               origin: this.origen,
+               destination: this.final,
+               travelMode: 'DRIVING',
+               unitSystem: google.maps.UnitSystem.METRIC
               }
-              
-            }, secuencia);   
+
+              directionsService.route(this.drawRoute, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                  // Muestra la Ruta en el Mapa
+                  directionsDisplay.setDirections(response);
+                }
+              });
+     
+      console.log(this.ListDirs.length);
+
+
+
+
+
+             //alert("Por favor señor usuario espere a que termine el recorrido");
+  		//llama la función que itera el Json y pinta los puntos del recorrido
+  		this.appear();
+    
+		  //for (var i = 0, length = this.ListDirs.length; i < length; i++) {}
+  	}
+
+    //función itera el Json de lat, long y date, de acuerdo con la diferencia de los tiempos entre cada objeto (.date) del Json
+    appear(){
+         
+
+    
+               
+
+
+      //saca la diferncia de las fechas entre dos objetos del array 
+      var next = moment(this.ListDirs[this.x+1].date); //segundo objeto date
+      var current = moment(this.ListDirs[this.x].date); // primer objeto date
+      var duration = moment.duration(next.diff(current)); //saca la diferencia
+      var seconds =duration.asSeconds(); //saca la diferencia en segungos
+      var secuencia = seconds*1000; //convertir la diferencia en milisegundos
+       
+      var interval;
+     
+      this.x ++;
+
+     this.interval = setInterval(()=> { 
                  
-                 let data = this.ListDirs[this.x],  
-                 latLng = new google.maps.LatLng(data.lat, data.lng); 
-                // Crear un Marker y lo ponerlo en el mapa
-                let marker = new google.maps.Marker({
+                  // Crear un Marker y lo pone en el mapa
+                  let data = this.ListDirs[this.x],  
+                  latLng = new google.maps.LatLng(data.lat, data.lng); 
+                  let marker = new google.maps.Marker({
                   icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                   position: latLng,
                   map: this.map,
-                  title: ''
-                  
-                });
-                console.log(this.x.toString());
-       this.x ++;
+                  title: 'Posición '+this.x
+                  });
+                  console.log("Objeto : "+this.x.toString()+" Diferencia: " +seconds+ "  Sg");
+
+            clearInterval(this.interval);
+            if(this.x<this.ListDirs.length-1){
+            this.appear();
+             
+            }else{
+
+              console.log("final del recorrido " +this.x);
+            this.x = 0;
+            }
+      }, secuencia);   
+
+      
     }
-
-
-
 }
