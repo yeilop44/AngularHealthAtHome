@@ -1,0 +1,25 @@
+[debug] [2018-08-14T20:01:06.599Z] ----------------------------------------------------------------------
+[debug] [2018-08-14T20:01:06.702Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\yeison\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase init
+[debug] [2018-08-14T20:01:06.703Z] CLI Version:   3.17.6
+[debug] [2018-08-14T20:01:06.703Z] Platform:      win32
+[debug] [2018-08-14T20:01:06.703Z] Node Version:  v9.8.0
+[debug] [2018-08-14T20:01:06.704Z] Time:          Tue Aug 14 2018 15:01:06 GMT-0500 (Hora de verano central (México))
+[debug] [2018-08-14T20:01:06.704Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-14T20:01:06.761Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] [2018-08-14T20:01:06.762Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Software Development\Angular\HealthAtHome
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
