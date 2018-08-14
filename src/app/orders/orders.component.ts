@@ -33,10 +33,8 @@ export class OrdersComponent implements OnInit {
 	final;
 	x ;
 
-
   user='';
   userquema;
-
 
 	ListDirs: any[];
 	orders:any[];
@@ -47,11 +45,7 @@ export class OrdersComponent implements OnInit {
   showOrders:boolean = false;
   showDetailsOrder:boolean = false;
 
-
   interval;
-
-
-
 
  	item: Item = {
      
@@ -326,11 +320,7 @@ export class OrdersComponent implements OnInit {
      
       console.log(this.ListDirs.length);
 
-
-
-
-
-             //alert("Por favor señor usuario espere a que termine el recorrido");
+       //alert("Por favor señor usuario espere a que termine el recorrido");
   		//llama la función que itera el Json y pinta los puntos del recorrido
   		this.appear();
     
@@ -340,11 +330,6 @@ export class OrdersComponent implements OnInit {
     //función itera el Json de lat, long y date, de acuerdo con la diferencia de los tiempos entre cada objeto (.date) del Json
     appear(){
          
-
-    
-               
-
-
       //saca la diferncia de las fechas entre dos objetos del array 
       var next = moment(this.ListDirs[this.x+1].date); //segundo objeto date
       var current = moment(this.ListDirs[this.x].date); // primer objeto date

@@ -1,13 +1,13 @@
 <div class="row">
-
+ <!-- Ordenes del Usuario-->
 	<div class="col s3" *ngIf="showOrders" id="orders">
-        <!-- Ordenes del Usuario-->
+       
         <h6><b>Orders</b>  {{userquema}}</h6>
         <div class="collection" *ngFor=" let order of orders">
           <a class="collection-item" (click)="showProduct(order)">{{order}}</a> 
         </div>
   </div>
-
+ <!-- Map-->
   <div class="col s9" >
       <div class="input-field col s6">
         <input  id="user" type="text" class="validate" name="user" placeholder="ingrese un usuario" [(ngModel)]="user">
@@ -21,17 +21,16 @@
   <div class="col s3">
   </div>
 
+ <!-- Detalles de la Orden  -->
 	<div class="col s9" *ngIf="showDetailsOrder">
-        <!-- Detalles de la Orden  -->
-
-        <div class="col md6" >
-          <h6><b>Order Details</b></h6>
-           <!--<h3>{{items_res.items | json}}</h3>-->
-          <div *ngFor=" let item of items_res.items">
-          <h6><b>Id: </b>{{item.product.id}}, <b>Name: </b>{{item.product.name}}, <b>Precio: </b>{{item.product.eachPrice}}, <b> Quantity: </b> {{item.quantity}} ,<b> Address : </b>Latitude: {{items_res.trackingInfo.destination.latitude}}, Longitude: {{items_res.trackingInfo.destination.longitude}}</h6>  
-              <br>
-          </div>
-        </div>
+    <div class="col md6" >
+      <h6><b>Order Details</b></h6>
+      <!--<h3>{{items_res.items | json}}</h3>-->
+      <div *ngFor=" let item of items_res.items">
+        <h6><b>Id: </b>{{item.product.id}}, <b>Name: </b>{{item.product.name}}, <b>Precio: </b>{{item.product.eachPrice}}, <b> Quantity: </b> {{item.quantity}} ,<b> Address : </b>Latitude: {{items_res.trackingInfo.destination.latitude}}, Longitude: {{items_res.trackingInfo.destination.longitude}}</h6>  
+          <br>
+      </div>
+    </div>
   </div>
 </div>	
 
