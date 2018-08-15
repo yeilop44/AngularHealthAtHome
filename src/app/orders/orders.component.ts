@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { } from '@types/googlemaps';
 
 import * as moment from 'moment';
@@ -12,6 +11,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service';
+
 import { Product } from '../models/modelEjemplo';
 import { Item } from '../models/modelEjemplo';
 
@@ -22,16 +22,18 @@ import { Item } from '../models/modelEjemplo';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-	@ViewChild('gmap') gmapElement: any;
+	@ViewChild('gmap') gmapElement: ElementRef;
 	map: google.maps.Map;
 	centrarmap = {lat:6.231928, lng:-75.60116719999996}
+
+
 
 	marker: any;
 	positionFin: any;
 	drawRoute;
 	origen;
 	final;
-	x ;
+	x;
 
   user='';
   userquema;
@@ -45,6 +47,8 @@ export class OrdersComponent implements OnInit {
   showOrders:boolean = false;
   showDetailsOrder:boolean = false;
   showMap:boolean = true;
+
+
 
   interval;
   numOrders;
@@ -74,108 +78,93 @@ export class OrdersComponent implements OnInit {
   constructor(private http:Http, private auth:AuthService, private httpC:HttpClient) { }
 
   	ngOnInit() {
-     this.x=0;
-     clearInterval(this.interval); //Para el SetIntervalcd
- 		
-
- 			//Crea Mapa inicial
-		  	/*var mapProp = {
-		      center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
-		      zoom: 9,
-		      mapTypeId: google.maps.MapTypeId.ROADMAP
-		    };
-		    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
+     
 	  }
 
 
-	//Obtiene Ordenes por usuario
-	getIdOrderByUser(user){
+  	//Obtiene Ordenes por usuario
+  	getIdOrderByUser(user){
 
-     clearInterval(this.interval); //Para el SetInterval
+       
+       clearInterval(this.interval); //Para el SetInterval
 
-      //comprueba si el campo usuario no está vacio y adiciona el user a la url
-        let url = '';             
-       if(user && user != '') {
-          url=`${this.urlApi}/${user}`
-          let token = this.auth.getToken(); 
-          let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
+        //comprueba si el campo usuario no está vacio y adiciona el user a la url
+          let url = '';             
+          if(user && user != '') {
+            url=`${this.urlApi}/${user}`
+            let token = this.auth.getToken(); 
+            let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
 
-          return this.http.get(url,{headers:headers})
-           .map(res=>{
-               this.orders = res.json();
-                 console.log(this.orders);
-                 console.log(this.orders.length);
-                 this.numOrders = this.orders.length;
+            return this.http.get(url,{headers:headers})
+             .map(res=>{
+                 this.orders = res.json();
+                   console.log(" orders = " + this.orders.length );
+                   this.numOrders = this.orders.length;
 
-                  //Comprueba si el usuario tiene orders
-                  if(this.orders.length==(null || 0)){
-                   alert("The user "+ this.user + " doesn't have orders");
-                   this.showOrders = false;
-                   this.showDetailsOrder = false;
-                   this.x=0;
-                   this.showMap = false;
+                    //Comprueba si el usuario tiene orders
+                    if(this.orders.length==(null || 0)){
+                     alert("The user "+ this.user + " doesn't have orders");
+                     this.showOrders = false;
+                     this.showDetailsOrder = false;
+                     this.x=0;
+                     this.showMap = false;
 
-                                 /* var mapProp = {
-                                  center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
-                                  zoom: 9,
-                                  mapTypeId: google.maps.MapTypeId.ROADMAP
-                                  };
-                                  this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
-                  }else{
-                   this.showOrders = true;
-                   this.userquema = this.user
-                   this.user= "";
-                   this.showMap = true;
-                  }
-             }).subscribe(res=>{
-          });   
+                                  
+                    }else{
 
-        }else{
-          alert("ingrese un usuario");
-              this.showOrders = false;
-              this.showDetailsOrder = false;
-              this.showMap = false;
-              this.x=0;
-               /*
-                var mapProp = {
-                center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
-                zoom: 9,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);*/
-        }
+                     this.showOrders = true;
+                     this.userquema = this.user
+                     this.user= "";
+                     this.showMap = true;
+
+                         var mapProp = {
+                          center: new google.maps.LatLng(this.centrarmap.lat, this.centrarmap.lng),
+                          zoom: 9,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                          };
+                          this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+                    }
+               }).subscribe(res=>{
+            });   
+          }else{
+            alert("ingrese un usuario");
+                this.showOrders = false;
+                this.showDetailsOrder = false;
+                this.showMap = false;
+                this.x=0;
+                 
+          }
     }
 
-    //función obtner detalles de la orden
+    //función obtner detalles de la orden por Id Order
     getOrderById(order){
      
-      clearInterval(this.interval); //Para el SetInterval
+     this.x = 0; 
+     clearInterval(this.interval); //Para el SetInterval
 
         this.showDetailsOrder = true; 
         let urlorder = "http://13.90.130.197/order"; 
         let url=`${urlorder}/${order}`          
         let token = this.auth.getToken(); 
-       // const httpOptions = {
-       // headers: new HttpHeaders({'Authorization': `Bearer ${token.token}`, 'Content-Type':'application/json','Accept': 'application/json'})
-      //};
+   
         let headers = new Headers({'Authorization':`Bearer ${token.token}`,'Content-Type':'application/json','Accept': 'application/json'});
 
           return this.http.get(url,{headers:headers})
            .map(res=>{
              this.items_res = res.json();
-             console.log(this.items_res);
-                // res.json()
             }).subscribe(res=>{
           }); 
-           
+      
+          
     }
 
     //función mostrar Detalles Ordenes
-    showProduct(order){
+    showOrder(order){
   
+     
         clearInterval(this.interval); //Para el SetInterval
         this.getOrderById(order)
-        this.x = 0; 
+        
         //Json de lat lng y date del Recorrido
        this.ListDirs = [
          
@@ -340,12 +329,10 @@ export class OrdersComponent implements OnInit {
       var duration = moment.duration(next.diff(current)); //saca la diferencia
       var seconds =duration.asSeconds(); //saca la diferencia en segungos
       var secuencia = seconds*1000; //convertir la diferencia en milisegundos
-       
-      var interval;
      
       this.x ++;
 
-     this.interval = setInterval(()=> { 
+      this.interval = setInterval(()=> { 
                  
                   // Crear un Marker y lo pone en el mapa
                   let data = this.ListDirs[this.x],  
@@ -358,6 +345,7 @@ export class OrdersComponent implements OnInit {
                   });
                   console.log("Objeto : "+this.x.toString()+" Diferencia: " +seconds+ "  Sg");
 
+     
             clearInterval(this.interval);
             if(this.x<this.ListDirs.length-1){
             this.appear();
@@ -371,4 +359,14 @@ export class OrdersComponent implements OnInit {
 
       
     }
+
+    ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+}
+
+
+
+
 }

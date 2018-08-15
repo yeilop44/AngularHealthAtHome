@@ -34,9 +34,7 @@ export class ProductsComponent implements OnInit {
   res:boolean = false;
   urlImg:string="http://13.90.130.197/product";
 
-  constructor(private connect:ConnectfbService,
-              private productS:ProductService,
-              public auth:AuthService) { }
+  constructor(private connect:ConnectfbService, private productS:ProductService, public auth:AuthService) { }
 
   ngOnInit() {
     this.key='';
@@ -51,7 +49,7 @@ export class ProductsComponent implements OnInit {
     this.productS.getProduct().subscribe(res=>{
         
           this.products= res; 
-          console.log(this.products) 
+          
        
     });  
 

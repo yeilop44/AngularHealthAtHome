@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ConnectfbService } from './services/connectfb.service';
 import { Usuario } from './models/modelEjemplo';
 import { AuthService } from './services/auth.service';
+
+
+
 
 @Component({
   selector: 'app-root',
@@ -9,8 +12,6 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  incorrect:any;
 
   usuario:Usuario={
     password:"",
@@ -19,17 +20,24 @@ export class AppComponent {
 
   
   constructor(public auth:AuthService){}
-
+    ngOnInit() {
+     
+     
+    }
+ 
   login(){
 
     this.auth.log(this.usuario)    
 
         .subscribe(data=>{
          
-              }); 
-       
-       
-              
-
+              });   
   }
+
+  logOut(){
+    this.auth.logOut();
+ 
+  }
+
+
 }

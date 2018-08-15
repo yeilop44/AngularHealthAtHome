@@ -10,7 +10,7 @@
 	<input (click)="getProduct()" type="button" class="btn btn-light" name="search" value="buscar" >
 	<input (click)="ngOnInit()" type="button" class="btn btn-light" name="cancel" value="cancelar" >
 </div>
-//-->
+-->
 <div>
 	
 	
@@ -47,15 +47,14 @@
 		</div>
 	
 		<!-- Listar productos-->
-		<div class="row">
-			<div class="col md6" *ngFor=" let product of products">
-				<div *ngIf="product.name" class="card" style="width: 18rem;" >
-					
+		<div class="row" >
+			<div class="col s3" *ngFor=" let product of products" >
+				<div class="card">
 					<div class="card-image">
-        				<img class="card-img-top" src="{{ urlImg+'/'+product.id+'/image/'+product.photos[1]}}" width="200" height="140" alt="Card image cap" *ngIf="product.photos[1] != 'string'">
+						<img class="card-img-top" src="{{ urlImg+'/'+product.id+'/image/'+product.photos[1]}}" width="200" height="140" alt="Card image cap" *ngIf="product.photos[1] != 'string'">
        					<img class="card-img-top" src="https://fidelizacion.federacioncomercioalbacete.com/images/productos/noimage.jpg" width="200" height="140" alt="Card image cap" *ngIf="product.photos[5] == 'string'">
-     				</div>
-					
+						
+					</div>
 					<div class="card-content">
 						<h5 class="card-title"><strong> {{product.name}} </strong></h5>
 						<p class="card-text"> Category: {{product.category.name}}</p>
@@ -64,13 +63,17 @@
 						<p class="card-text">Id:{{product.id}}</p>
 						<p class="card-text">photo:{{product.photos}}</p>
 					</div>
-						<button  (click)="deleteProduct(product)"  class="btn waves-effect waves-red">Delete</button>  
-						<button  (click)="toUpd(product)" class="update" class="btn waves-effect waves-orange">Update</button>  
-						<button (click)="showProduct(product)" class="btn btn-info" class="btn waves-effect waves-light">See changes</button ><br><br>
+					<div class="card-action">
+						<button  (click)="deleteProduct(product)"  class="btn waves-effect waves-red">Delete</button> 
+						<button  (click)="toUpd(product)" class="update" class="btn waves-effect waves-orange">Update</button>  	
+						<button (click)="showProduct(product)" class="btn btn-info" class="btn waves-effect waves-light">See changes</button > 
+					</div>	
 				</div>
 			</div>
 		</div>
-		
+
+
+
 	
 	
 </div>

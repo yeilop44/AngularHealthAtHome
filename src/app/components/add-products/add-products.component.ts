@@ -7,6 +7,8 @@ import 'rxjs/add/operator/map';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { AuthService } from '../../services/auth.service';
 
+
+
 @Component({
   selector: 'app-add-products',
   templateUrl: './add-products.component.html',
@@ -31,6 +33,12 @@ idPorductImage= null;
 
   constructor(private productS:ProductService, private http:Http,private auth:AuthService, private httpC:HttpClient) { }
 
+
+
+ ngOnInit(){
+   
+  }
+
 handleFileInput(files: FileList) {
       this.fileToUpload = files.item(0);
        console.log(this.fileToUpload.name);
@@ -47,7 +55,7 @@ handleFileInput(files: FileList) {
      this.productS.postFile(this.fileToUpload, this.product);
      
      
-       //Limpiar Form
+      
       
         
     }

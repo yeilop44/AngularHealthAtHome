@@ -13,6 +13,7 @@ import { ConnectfbService } from './services/connectfb.service';
 import { AuthService } from './services/auth.service';
 import { ProductService } from './services/product.service';
 
+
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AddProductsComponent } from './components/add-products/add-products.component';
@@ -52,7 +53,7 @@ const appRoutes: Routes = [
     HttpModule,
     HttpClientModule
   ],
-  providers: [ConnectfbService,AuthService,ProductService],
+  providers: [ConnectfbService,AuthService,ProductService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

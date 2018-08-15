@@ -13,7 +13,7 @@
   <div class="nav-wrapper">
     <div class="brand-logo">HEALTH AT HOME</div>
     <ul class="right hide-on-med-and-down">
-      <li><a *ngIf="auth.loggedIn" (click)="auth.loggedIn = false" class="waves-effect waves-light btn">Log out</a></li>
+      <li><a *ngIf="auth.loggedIn" (click)="logOut()" class="waves-effect waves-light btn">Log out</a></li>
     </ul>
     <h6 class="center-align" *ngIf="auth.loggedIn" style="color:white">{{usuario.user}}</h6>
   </div> 
@@ -56,10 +56,18 @@
       </ul>
     </div>
   </nav>
+<div></div>
+
+
 
 
   <router-outlet></router-outlet> 
 </section>
+
+
+
+
+
 <footer *ngIf="auth.loggedIn" class="page-footer">
           <div class="container">
             <div class="row">

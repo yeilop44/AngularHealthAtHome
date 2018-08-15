@@ -27,10 +27,13 @@ export class AuthService {
 				 	console.log(this.userToken);
 				 	this.loggedIn = res.ok;
            			this.user = user.user;
-
-
-
 				 }); 
+	}
+
+
+	logOut(){
+		this.loggedIn = false;
+		console.log("LOGOUT ");
 	}
 
 	getToken(){
