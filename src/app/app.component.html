@@ -47,7 +47,6 @@
 <section *ngIf="auth.loggedIn">
   <nav class="navbar navbar-dark bg-primary">
     <div class="nav-wrapper">
-     
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a routerLink="/">Home</a></li>
         <li><a routerLink="product">Products</a></li>
@@ -56,17 +55,8 @@
       </ul>
     </div>
   </nav>
-<div></div>
-
-
-
-
   <router-outlet></router-outlet> 
 </section>
-
-
-
-
 
 <footer *ngIf="auth.loggedIn" class="page-footer">
           <div class="container">

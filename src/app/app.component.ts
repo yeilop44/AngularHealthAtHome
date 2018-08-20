@@ -26,11 +26,8 @@ export class AppComponent {
     }
  
   login(){
-
     this.auth.log(this.usuario)    
-
         .subscribe(data=>{
-         
               });   
   }
 
