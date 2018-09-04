@@ -1,13 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-<!--/bootstrap 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
--->
-
 
 <nav class="nav-wrapper">
   <div class="nav-wrapper">
@@ -17,8 +7,6 @@
     </ul>
     <h6 class="center-align" *ngIf="auth.loggedIn" style="color:white">{{usuario.user}}</h6>
   </div> 
-  
-  
 </nav>
 
 <br>
@@ -26,32 +14,27 @@
 
 <div *ngIf="!auth.loggedIn" class="row">
   <form (ngSubmit)="login() " class="col s12"> 
+    <div class="input-field col s6">
+      <i class="material-icons prefix">mail_outline</i>
+      <input type="text" [(ngModel)]= "usuario.user"  class="form-control" name="email" placeholder="User">
+    </div>
 
-      <div class="input-field col s6">
-        <i class="material-icons prefix">mail_outline</i>
-        <input type="text" [(ngModel)]= "usuario.user"  class="form-control" name="email" placeholder="User">
-      </div>
-
-      <div class="input-field col s6">
-        <i class="material-icons prefix">lock_outline</i>
-        <input type="passWord" [(ngModel)]= "usuario.password" class="form-control"  name="pass" placeholder="Password">
-      </div>
-    
-    
+    <div class="input-field col s6">
+      <i class="material-icons prefix">lock_outline</i>
+      <input type="passWord" [(ngModel)]= "usuario.password" class="form-control"  name="pass" placeholder="Password">
+    </div>
     <input type="submit" name="" value="sign in" class="btn waves-effect bg-primary col s12">
- 
   </form>
 </div>
-
 
 <section *ngIf="auth.loggedIn">
   <nav class="navbar navbar-dark bg-primary">
     <div class="nav-wrapper">
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="product">Products</a></li>
-        <li><a routerLink="product/new">New Product</a></li>
-        <li><a routerLink="orders">Order History</a></li>
+        <li ><a [routerLink]="['/']">Home</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['product']">Products</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['product/new']">New Product</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['orders']">Order History</a></li>
       </ul>
     </div>
   </nav>
@@ -59,22 +42,22 @@
 </section>
 
 <footer *ngIf="auth.loggedIn" class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">HEALTH AT HOME S.A.</h5>
-                <p class="grey-text text-lighten-4">Health At Home is dedicated to serving patients in a remote and personalized way, trying to make the health service much better for their clients.<br> 
-                Health At Home currently has a presence in 3 countries in South America and 2 in Europe. In the countries of South America it has service in the 3 main cities of each country and in Europeans in the 5 main cities.</p>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            HEALTH AT HOME S.A.<br>
-            Medellín, Antioquia, Colombia.<br>
-            It is recommended to use Chrome or Mozilla Firefox in a resolution of 1024 x 768 or higher.
-           © 2018 Copyright Text
-            
-            </div>
-          </div>
-        </footer>
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">HEALTH AT HOME S.A.</h5>
+          <p class="grey-text text-lighten-4">Health At Home is dedicated to serving patients in a remote and personalized way, trying to make the health service much better for their clients.<br> 
+          Health At Home currently has a presence in 3 countries in South America and 2 in Europe. In the countries of South America it has service in the 3 main cities of each country and in Europeans in the 5 main cities.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      HEALTH AT HOME S.A.<br>
+      Medellín, Antioquia, Colombia.<br>
+      It is recommended to use Chrome or Mozilla Firefox in a resolution of 1024 x 768 or higher.
+     © 2018 Copyright Text
+      
+      </div>
+    </div>
+</footer>

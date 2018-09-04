@@ -1,79 +1,52 @@
-
-<!-- 
+<!-- Boton (formulario) Actualizar -->
 <div>
-	<select [(ngModel)]="key" name="key">
-		<option value="">ID</option>
-		<option value="name">Name</option>
-		<option value="category">Category</option>
-	</select>
-	<input type="text" [(ngModel)]="val" name="val">
-	<input (click)="getProduct()" type="button" class="btn btn-light" name="search" value="buscar" >
-	<input (click)="ngOnInit()" type="button" class="btn btn-light" name="cancel" value="cancelar" >
+	<form *ngIf="update"  (ngSubmit)="updateProduct()" style="width: 350px !important;margin-top: -163px; " >
+		<input type="text" placeholder="id" [(ngModel)] = "product.id" name="id"><br>
+		<input type="text" placeholder="Name" [(ngModel)]="product.name" name="name"> <br>
+		 <input type="text" placeholder="Description" [(ngModel)] = "product.description" name="description"><br>
+		 <input type="number" [(ngModel)]="product.eachPrice" placeholder="Precio" name="price"> <br>
+		 <input type="text" [(ngModel)]="product.category.id" placeholder="Categoria id" name="category_id"> <br>
+		 <input type="text" placeholder="nombre categoria" [(ngModel)] = "product.category.name" name="Categoria_name"><br>
+		 <input type="text" placeholder="caracteristicas" [(ngModel)] = "product.medical_characteristics" name="caracteristicas"><br>
+		 <input type="text" placeholder="foto" [(ngModel)] = "product.photos" name="foto"><br>
+		 <input type="text" placeholder="volume" [(ngModel)] = "product.volume" name="volume"><br>
+		 <input type="text" placeholder="plataforma" [(ngModel)] = "product.platform" name="plataforma"><br>
+		 <input type="submit" value="Guardar" >
+		 <input (click)="update=false" type="button" name="cancel" value="cancelar" >
+	</form>
 </div>
--->
-<div>
-	
-	
-	
-		
-		<!-- Boton (formulario) Actualizar -->
-		<div>
-		<form *ngIf="update"  (ngSubmit)="updateProduct()" style="width: 350px !important;margin-top: -163px; " >
-			<input type="text" placeholder="id" [(ngModel)] = "product.id" name="id"><br>
-			<input type="text" placeholder="Name" [(ngModel)]="product.name" name="name"> <br>
-			 <input type="text" placeholder="Description" [(ngModel)] = "product.description" name="description"><br>
-			 <input type="number" [(ngModel)]="product.eachPrice" placeholder="Precio" name="price"> <br>
-			 <input type="text" [(ngModel)]="product.category.id" placeholder="Categoria id" name="category_id"> <br>
-			 <input type="text" placeholder="nombre categoria" [(ngModel)] = "product.category.name" name="Categoria_name"><br>
-			 <input type="text" placeholder="caracteristicas" [(ngModel)] = "product.medical_characteristics" name="caracteristicas"><br>
-			 <input type="text" placeholder="foto" [(ngModel)] = "product.photos" name="foto"><br>
-			 <input type="text" placeholder="volume" [(ngModel)] = "product.volume" name="volume"><br>
-			 <input type="text" placeholder="plataforma" [(ngModel)] = "product.platform" name="plataforma"><br>
-			 <input type="submit" value="Guardar" >
-			 <input (click)="update=false" type="button" name="cancel" value="cancelar" >
-		</form>
-		</div>
-		
-		<!-- Boton ver (ultimos cambios y el usuario quien los hizo)-->
-		<div class="view" *ngIf="show" style="width:45% !important; margin-top: -12%;">
-			<h3>{{product.name}}</h3>
-			<p><strong>ID: </strong>{{product.id}} </p>
-			<p> <strong>Description: </strong> {{product.description}} </p>
-			<p><strong>Price: </strong>{{product.eachPraice}} </p>
-			<p><strong>Category: </strong>{{product.category.name}} </p>
-			<p *ngIf="product.regist.time"><strong>Update: </strong>{{product.regist.time}}</p>
-			<p *ngIf="product.regist.time"><strong>User: </strong>{{product.regist.user}}</p>
-			<button (click)="show=false">cerrar</button >
-		</div>
-	
-		<!-- Listar productos-->
-		<div class="row" >
-			<div class="col s3" *ngFor=" let product of products" >
-				<div class="card">
-					<div class="card-image">
-						<img class="card-img-top" src="{{ urlImg+'/'+product.id+'/image/'+product.photos[1]}}" width="200" height="140" alt="Card image cap" *ngIf="product.photos[1] != 'string'">
-       					<img class="card-img-top" src="https://fidelizacion.federacioncomercioalbacete.com/images/productos/noimage.jpg" width="200" height="140" alt="Card image cap" *ngIf="product.photos[5] == 'string'">
-						
-					</div>
-					<div class="card-content">
-						<h5 class="card-title"><strong> {{product.name}} </strong></h5>
-						<p class="card-text"> Category: {{product.category.name}}</p>
-						<p class="card-text">Price: {{product.eachPrice}}</p>
-						<p class="card-text">Description: {{product.description}}</p>
-						<p class="card-text">Id:{{product.id}}</p>
-						<p class="card-text">photo:{{product.photos}}</p>
-					</div>
-					<div class="card-action">
-						<button  (click)="deleteProduct(product)"  class="btn waves-effect waves-red">Delete</button> 
-						<button  (click)="toUpd(product)" class="update" class="btn waves-effect waves-orange">Update</button>  	
-						<button (click)="showProduct(product)" class="btn btn-info" class="btn waves-effect waves-light">See changes</button > 
-					</div>	
-				</div>
-			</div>
-		</div>
 
+<!-- Boton ver (ultimos cambios y el usuario quien los hizo)-->
+<div class="view" *ngIf="show" style="width:45% !important; margin-top: -12%;">
+	<h3>{{product.name}}</h3>
+	<p><strong>ID: </strong>{{product.id}} </p>
+	<p> <strong>Description: </strong> {{product.description}} </p>
+	<p><strong>Price: </strong>{{product.eachPraice}} </p>
+	<p><strong>Category: </strong>{{product.category.name}} </p>
+	<p *ngIf="product.regist.time"><strong>Update: </strong>{{product.regist.time}}</p>
+	<p *ngIf="product.regist.time"><strong>User: </strong>{{product.regist.user}}</p>
+	<button (click)="show=false">cerrar</button >
+</div>
 
-
-	
-	
+<!-- Listar productos-->
+<div class="row">
+    <div class="col s12 m3" *ngFor="let product of products">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{ urlImg+'/'+product.id+'/image/'+product.photos[1]}}" width="200" height="140" alt="Card image cap" *ngIf="product.photos[1] != 'string'">
+          <img src="https://fidelizacion.federacioncomercioalbacete.com/images/productos/noimage.jpg" width="200" height="140" alt="Card image cap" *ngIf="product.photos[1] == 'string'">
+        </div>
+        <div class="card-content">
+        	<span class="card-title"><strong>{{ product.name }}</strong></span>
+            <p> Category: {{product.category.name}} </p>
+            <p> Price: {{product.eachPrice}} </p>
+            <p> photo:{{product.photos}} </p>
+        </div>
+        <div class="card-action">
+        	<button  (click)="deleteProduct(product)"  class="btn red darken-1 waves-effect waves-light"> <i class="material-icons">delete</i></button> 
+			<button  (click)="toUpd(product)" class="update" class="btn green darken-1 waves-effect waves-light"><i class="material-icons">mode_edit</i></button>  	
+			<button (click)="showProduct(product)" class="btn btn-info" class="btn blue darken-1 waves-effect waves-light"><i class="material-icons">track_changes</i></button >
+        </div>
+      </div>
+    </div>
 </div>
